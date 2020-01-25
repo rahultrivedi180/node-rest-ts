@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 
 import responseFormat from "./utils/responseFormat.util";
 
+import cors from "./middlewares/cors.middleware";
+
 const app = express();
 
 const dburi = `${process.env.DB_URI}`;
@@ -29,7 +31,8 @@ app
   .use(compression({ level: 9 }))
   .use(express.json())
   .use(express.urlencoded({ extended: true }))
-  .use(morgan("dev"));
+  .use(morgan("dev"))
+  .use(cors);
 
 app.use((req: Request, res: Response) => {
   const json = responseFormat("Route Not Found", null, null);
